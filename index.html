@@ -14,105 +14,91 @@
             font-family: 'Noto Sans SC', sans-serif;
         }
 
-        body:not(header) {
-            padding-top: 89px;
-            ;
+        body {
+            background-image: url("background-image.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        a {
-            cursor: pointer;
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #CCFFFF;
+            /* 导航栏背景颜色 */
+            overflow: hidden;
+            /* 隐藏溢出内容 */
+            border-left: 6px solid #66CCFF;
+            /* 左侧边框 */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            /* 边框阴影 */
         }
 
-        #main-header {
+        /* 导航栏链接样式 */
+        .navbar a {
+            float: left;
+            /* 左浮动 */
+            color: rgb(0, 0, 0);
+            /* 链接文字颜色 */
+            text-align: center;
+            /* 文字居中 */
+            padding: 14px 16px;
+            /* 链接内边距 */
+            text-decoration: none;
+            /* 去除下划线 */
+        }
+
+        /* 鼠标悬停链接样式 */
+        .navbar a:hover {
+            background-color: #8bf7f7;
+            /* 链接背景颜色 */
+            color: black;
+            /* 链接文字颜色 */
+        }
+
+        .video-container {
+            position: absolute;
+            top: 82px;
+            left: 40px;
+            width: 60%;
+        }
+
+        .video-container video {
             width: 100%;
             height: auto;
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            border-left: 6px solid #66CCFF;
-            background-color: #CCFFFF;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        #header-links {
-            height: 100%;
-            width: 100%;
-        }
-
-        #tittle p {
-            padding-left: 16px;
-            font-size: 1.5em;
-        }
-
-        #header-links div,
-        .cover {
-            display: inline-block;
-        }
-
-        #link {
-            position: fixed;
-            right: 20px;
-        }
-
-        .cover p {
-            font-size: 1.5em;
-        }
-
-        .cover:hover {
-            color: #66CCCC;
         }
     </style>
-    <!--为移动端定制的媒体查询-->
-    <style>
-        @media (max-width: 500px) {
-            #tittle p {
-                font-size: 1.4em;
-            }
-
-            .cover p {
-                font-size: 1.4em;
-            }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 
 <body>
-    <header id="main-header">
-        <div id="header-links">
-            <div id="tittle">
-                <p><a>X-Bro的博客</a></p>
-            </div>
-            <div id="link">
-                <div class="cover">
-                    <p><a>首页</a></p>
-                </div>
-                <div class="cover">
-                    <p><a>文章</a></p>
-                </div>
-                <div class="cover">
-                    <p><a>留言</a></p>
-                </div>
-                <div class="cover">
-                    <p><a>关于网站</a></p>
-                </div>
-                <div class="cover">
-                    <p><a>我</a></p>
-                </div>
-            </div>
-        </div>
-    </header>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
-    <p>dgdfg</p>
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <a href="#">首页</a>
+        <a href="#">文章</a>
+        <a href="#">工具</a>
+        <a href="#">关于我们</a>
+    </div>
+    <div class="video-container">
+        <video id="video" controls></video>
+    </div>
+
+    <script>
+        if (Hls.isSupported()) {
+            var video = document.getElementById('video');
+            var hls = new Hls();
+            hls.loadSource('https://pic.r-d.ren/fj/alma/index.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'path/to/video.m3u8';
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        }
+    </script>
 </body>
 
 </html>
